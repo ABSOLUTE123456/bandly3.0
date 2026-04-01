@@ -46,6 +46,23 @@
         tools:ignore="DuplicateIds,HardcodedText" />
 
     <EditText
+        android:id="@+id/inputPhoneLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="71dp"
+        android:background="@drawable/infimg"
+        android:hint="+7 ___ ___-__-__"
+        android:inputType="phone"
+        android:maxLength="18"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo2" />
+
+    <EditText
         android:id="@+id/inputPassLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,61 +71,65 @@
         android:layout_marginEnd="71dp"
         android:background="@drawable/infimg"
         android:hint="Введите пароль"
+        android:inputType="textPassword"
         android:paddingStart="16dp"
-        android:paddingLeft="16dp"
         android:paddingEnd="16dp"
-        android:paddingRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPhoneLogin" />
-
-    <EditText
-        android:id="@+id/inputPhoneLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="71dp"
-        android:background="@drawable/infimg"
-        android:digits="0123456789"
-        android:hint="Введите номер"
-        android:inputType="number"
-        android:paddingStart="16dp"
-        android:paddingLeft="16dp"
-        android:paddingEnd="16dp"
-        android:paddingRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo2" />
 
     <ImageButton
         android:id="@+id/loginbtn2"
         android:layout_width="225dp"
         android:layout_height="61dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="71dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="152dp"
         android:background="@drawable/regbtn"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inputPassLogin"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <ImageButton
+        android:id="@+id/backbutton"
+        android:layout_width="225dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/regbtn"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginbtn2"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="Нет аккаунта"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/backbutton"
+        app:layout_constraintEnd_toEndOf="@+id/backbutton"
+        app:layout_constraintStart_toStartOf="@+id/backbutton"
+        app:layout_constraintTop_toTopOf="@+id/backbutton"
+        app:layout_constraintVertical_bias="0.37" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:elevation="2dp"
         android:text="Войти в аккаунт"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/loginbtn2"
         app:layout_constraintEnd_toEndOf="@+id/loginbtn2"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="@+id/loginbtn2"
         app:layout_constraintTop_toTopOf="@+id/loginbtn2"
-        app:layout_constraintVertical_bias="0.352" />
+        app:layout_constraintVertical_bias="0.37" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

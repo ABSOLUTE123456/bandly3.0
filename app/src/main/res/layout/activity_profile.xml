@@ -17,10 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Шапка (Верхний фон) -->
-
-    <!-- Центральная белая карточка -->
-
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
@@ -35,40 +31,49 @@
         android:id="@+id/imageView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/rectangle_11__1_"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-    <!-- Аватар (теперь точно внутри карточки) -->
     <ImageView
         android:id="@+id/profileAvatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="218dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/ic_avatar"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
-    <!-- Имя и Возраст (будет выводиться как "Александр, 25") -->
+    <ImageButton
+        android:id="@+id/edit1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/editprof"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/profileAvatar" />
+
     <TextView
         android:id="@+id/ProfileName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Имя, Возраст"
         android:textColor="#6C63FF"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/profileAvatar" />
+        app:layout_constraintTop_toBottomOf="@+id/edit1" />
 
-    <!-- Город -->
     <TextView
         android:id="@+id/ProfileCity"
         android:layout_width="wrap_content"
@@ -82,7 +87,22 @@
         app:layout_constraintStart_toStartOf="@+id/imageView8"
         app:layout_constraintTop_toBottomOf="@+id/ProfileName" />
 
-    <!-- Инструменты и Жанры -->
+    <!-- ДОБАВЛЕНО: Скрытый номер телефона -->
+    <TextView
+        android:id="@+id/tvProfilePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="+7 XXX XXX XX XX"
+        android:textColor="#6C63FF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/imageView8"
+        app:layout_constraintStart_toStartOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/ProfileCity"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/tvProfileInfo"
         android:layout_width="260dp"
@@ -94,37 +114,30 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView8"
         app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/ProfileCity" />
+        app:layout_constraintTop_toBottomOf="@+id/tvProfilePhone" />
 
-    <!-- Описание (Био) -->
     <TextView
         android:id="@+id/tvProfileBio"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="О себе..."
         android:textColor="#555555"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView8"
-        app:layout_constraintStart_toStartOf="@+id/imageView8"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfileInfo" />
+        app:layout_constraintEnd_toEndOf="@+id/ProfileName"
+        app:layout_constraintStart_toStartOf="@+id/ProfileName"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileInfo"
+        tools:ignore="NotSibling" />
 
-    <!-- Нижние волны -->
-
-    <!-- Кнопка "К знакомствам" -->
     <ImageButton
         android:id="@+id/btnNext"
         android:layout_width="243dp"
         android:layout_height="53dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/group_16"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
-
-    <!-- Кнопка Назад (Стрелочка) -->
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -135,10 +148,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="@+id/btnNext"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/btnNext"
-        app:layout_constraintTop_toTopOf="@+id/btnNext"
-        app:layout_constraintVertical_bias="0.31" />
+        app:layout_constraintTop_toTopOf="@+id/btnNext" />
 
     <ImageButton
         android:id="@+id/backbtn"
@@ -150,7 +161,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Кнопка Настройки (Шестеренка) -->
     <ImageButton
         android:id="@+id/gear"
         android:layout_width="wrap_content"

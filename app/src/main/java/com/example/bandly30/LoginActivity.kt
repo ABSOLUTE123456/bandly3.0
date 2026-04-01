@@ -3,6 +3,8 @@ package com.example.bandly30
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -22,34 +24,72 @@ class LoginActivity : AppCompatActivity() {
         val passInput = findViewById<EditText>(R.id.inputPassLogin)
         val loginBtn = findViewById<ImageButton>(R.id.loginbtn2)
 
+        phoneInput.addTextChangedListener(PhoneMaskWatcher(phoneInput))
+
         loginBtn.setOnClickListener {
-            val phone = phoneInput.text.toString().trim()
+            val rawPhone = phoneInput.text.toString().replace(Regex("[^\\d]"), "")
             val password = passInput.text.toString().trim()
 
-            if (phone.isEmpty() || password.isEmpty()) {
+            if (rawPhone.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Введите номер и пароль", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Проверяем пользователя в БД через метод, который мы создали в SQLHelper
-            val isUserExist = dbHelper.checkUser(phone, password)
+            val isUserExist = dbHelper.checkUser(rawPhone, password)
 
             if (isUserExist) {
-                // 1. СОХРАНЯЕМ СЕССИЮ (номер телефона)
-                // Без этого ProfileActivity не поймет, чьи данные загружать
                 val sharedPref = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-                sharedPref.edit().putString("USER_PHONE", phone).apply()
+                sharedPref.edit().putString("USER_PHONE", rawPhone).apply()
 
                 Toast.makeText(this, "Вход выполнен!", Toast.LENGTH_SHORT).show()
 
-                // 2. ПЕРЕХОДИМ В ПРОФИЛЬ
                 val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra("USER_PHONE", phone) // На всякий случай дублируем в Intent
+                intent.putExtra("USER_PHONE", rawPhone)
                 startActivity(intent)
-                finish() // Закрываем экран логина
+                finish()
             } else {
                 Toast.makeText(this, "Неверный номер или пароль", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        findViewById<ImageButton>(R.id.backbutton).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+    }
+
+    inner class PhoneMaskWatcher(private val editText: EditText) : TextWatcher {
+        private var isUpdating = false
+        private val mask = "+7 (###) ###-##-##"
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            if (isUpdating) return
+
+            var str = s.toString().replace(Regex("[^\\d]"), "")
+
+            if (str.startsWith("7") || str.startsWith("8")) {
+                str = str.substring(1)
+            }
+
+            val formatted = StringBuilder()
+            var i = 0
+            for (m in mask.toCharArray()) {
+                if (m == '#') {
+                    if (i < str.length) {
+                        formatted.append(str[i])
+                        i++
+                    } else break
+                } else {
+                    if (i < str.length) formatted.append(m)
+                }
+            }
+
+            isUpdating = true
+            editText.setText(formatted.toString())
+            editText.setSelection(formatted.length) // Курсор всегда в конце
+            isUpdating = false
         }
     }
 }

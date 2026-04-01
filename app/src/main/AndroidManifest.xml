@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bandly30">
         <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationsActivity"
             android:exported="false" />
         <activity
@@ -22,9 +25,6 @@
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FiltersActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"

@@ -1,5 +1,6 @@
 package com.example.bandly30;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,7 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "Bandly.db";
-    private static final int SCHEMA = 8; // Подняли версию для обновления
+
+    private static final int SCHEMA = 9;
 
     public static final String TABLE = "users";
     public static final String COLUMN_ID = "_id";
@@ -21,10 +23,11 @@ public class SQLHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BIO = "bio";
     public static final String COLUMN_AVATAR = "avatar";
 
+    // Константы для таблицы лайков (кто кого лайкнул)
     public static final String TABLE_LIKES = "likes";
     public static final String COLUMN_LIKE_ID = "l_id";
-    public static final String COLUMN_WHO_PHONE = "who_phone";
-    public static final String COLUMN_WHOM_PHONE = "whom_phone";
+    public static final String COLUMN_WHO_PHONE = "who_phone";   // Номер того, кто ставит лайк
+    public static final String COLUMN_WHOM_PHONE = "whom_phone"; // Номер того, кого лайкают
 
     public SQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA);
@@ -32,24 +35,27 @@ public class SQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        // таблица для пользователей
         db.execSQL("CREATE TABLE " + TABLE + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_NAME + " TEXT, " +
                 COLUMN_AGE + " INTEGER, " +
                 COLUMN_PASSWORD + " TEXT, " +
-                COLUMN_PHONE + " TEXT, " +
+                COLUMN_PHONE + " TEXT UNIQUE, " +
                 COLUMN_CITY + " TEXT, " +
                 COLUMN_INSTRUMENTS + " TEXT, " +
                 COLUMN_GENRES + " TEXT, " +
                 COLUMN_BIO + " TEXT, " +
                 COLUMN_AVATAR + " TEXT);");
 
+        // таблица для лайков
         db.execSQL("CREATE TABLE " + TABLE_LIKES + " (" +
                 COLUMN_LIKE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_WHO_PHONE + " TEXT, " +
                 COLUMN_WHOM_PHONE + " TEXT);");
     }
 
+    // снос аккаунтов при новой версии бд
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE);
@@ -57,19 +63,40 @@ public class SQLHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // --- НОВЫЙ МЕТОД ДЛЯ УВЕДОМЛЕНИЙ ---
-    // Вытягивает имя, возраст и телефон тех, кто лайкнул текущего юзера
+    public void clearAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE, null, null);
+        db.delete(TABLE_LIKES, null, null);
+    }
+
+    public long addUser(String name, String phone, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues(); // Контейнер для передачи данных в БД
+        cv.put(COLUMN_NAME, name);
+        cv.put(COLUMN_PHONE, phone);
+        cv.put(COLUMN_PASSWORD, password);
+        return db.insert(TABLE, null, cv);
+    }
+
+    // удаление аккаунта самим владельцем
+    public void deleteUser(String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Удаляем лайки, где участвует этот телефон
+        db.delete(TABLE_LIKES, COLUMN_WHO_PHONE + "=? OR " + COLUMN_WHOM_PHONE + "=?", new String[]{phone, phone});
+        // Удаляем саму запись пользователя
+        db.delete(TABLE, COLUMN_PHONE + "=?", new String[]{phone});
+    }
+
     public Cursor getLikersFullData(String myPhone) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT u." + COLUMN_NAME + ", u." + COLUMN_AGE + ", u." + COLUMN_PHONE +
+        // JOIN объединяет таблицу лайков с таблицей пользователей для получения полной анкеты
+        String query = "SELECT u." + COLUMN_NAME + ", u." + COLUMN_AGE + ", u." + COLUMN_PHONE + ", u." + COLUMN_AVATAR +
                 " FROM " + TABLE + " u " +
                 " JOIN " + TABLE_LIKES + " l ON u." + COLUMN_PHONE + " = l." + COLUMN_WHO_PHONE +
                 " WHERE l." + COLUMN_WHOM_PHONE + " = ?";
         return db.rawQuery(query, new String[]{myPhone});
     }
 
-    // --- ОБНОВЛЕННЫЙ МЕТОД ДЛЯ ЛЕНТЫ (HOME) ---
-    // Показывает только тех, кого мы еще НЕ лайкали
     public Cursor getPotentialMatches(String myPhone) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE +
@@ -78,6 +105,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         return db.rawQuery(query, new String[]{myPhone, myPhone});
     }
 
+ // авторизация
     public boolean checkUser(String phone, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE + " WHERE " + COLUMN_PHONE + "=? AND " + COLUMN_PASSWORD + "=?", new String[]{phone, password});
@@ -86,6 +114,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    //  проверка лайков
     public boolean isMatch(String myPhone, String otherPhone) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT 1 FROM " + TABLE_LIKES + " WHERE " + COLUMN_WHO_PHONE + "=? AND " + COLUMN_WHOM_PHONE + "=? " +

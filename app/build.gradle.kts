@@ -5,9 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.bandly30"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36 // Рекомендуется 35, так как 36 еще в глубокой альфе
 
     defaultConfig {
         applicationId = "com.example.bandly30"
@@ -43,6 +41,10 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
+    // ДОБАВЛЕНО: Библиотека для круглых аватарок и работы с фото
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

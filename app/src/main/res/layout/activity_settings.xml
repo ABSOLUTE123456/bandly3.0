@@ -51,7 +51,7 @@
         app:layout_constraintVertical_bias="0.432" />
 
     <ImageButton
-        android:id="@+id/imageButton7"
+        android:id="@+id/alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -67,22 +67,22 @@
         android:text="Уведомления"
         android:textSize="23sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton7"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton7"
+        app:layout_constraintBottom_toBottomOf="@+id/alert"
+        app:layout_constraintEnd_toEndOf="@+id/alert"
         app:layout_constraintHorizontal_bias="0.068"
-        app:layout_constraintStart_toStartOf="@+id/imageButton7"
-        app:layout_constraintTop_toTopOf="@+id/imageButton7"
+        app:layout_constraintStart_toStartOf="@+id/alert"
+        app:layout_constraintTop_toTopOf="@+id/alert"
         app:layout_constraintVertical_bias="0.405" />
 
     <ImageButton
-        android:id="@+id/imageButton8"
+        android:id="@+id/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/group_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton7" />
+        app:layout_constraintTop_toBottomOf="@+id/alert" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -90,11 +90,11 @@
         android:text="О приложении"
         android:textSize="23sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton8"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton8"
+        app:layout_constraintBottom_toBottomOf="@+id/about"
+        app:layout_constraintEnd_toEndOf="@+id/about"
         app:layout_constraintHorizontal_bias="0.065"
-        app:layout_constraintStart_toStartOf="@+id/imageButton8"
-        app:layout_constraintTop_toTopOf="@+id/imageButton8"
+        app:layout_constraintStart_toStartOf="@+id/about"
+        app:layout_constraintTop_toTopOf="@+id/about"
         app:layout_constraintVertical_bias="0.405" />
 
     <ImageButton
@@ -105,7 +105,7 @@
         android:background="@drawable/group_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton8" />
+        app:layout_constraintTop_toBottomOf="@+id/about" />
 
     <TextView
         android:layout_width="wrap_content"

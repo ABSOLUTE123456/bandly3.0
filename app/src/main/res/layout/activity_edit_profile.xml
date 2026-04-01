@@ -165,7 +165,7 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/accept"
         android:layout_width="243dp"
         android:layout_height="53dp"
         android:layout_marginStart="84dp"
@@ -184,10 +184,10 @@
         android:text="Подтвердить"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-        app:layout_constraintStart_toStartOf="@+id/imageButton2"
-        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/accept"
+        app:layout_constraintEnd_toEndOf="@+id/accept"
+        app:layout_constraintStart_toStartOf="@+id/accept"
+        app:layout_constraintTop_toTopOf="@+id/accept"
         app:layout_constraintVertical_bias="0.346" />
 
     <ImageButton
